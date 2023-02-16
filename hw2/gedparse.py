@@ -3,7 +3,7 @@ import pprint
 l0_2_tags = ["INDI", "FAM"]
 l0_3_tags = ["HEAD", "TRLR", "NOTE"]
 l1_ind_tags = ["NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "CHIL"]
-l1_fam_tags = ["MARR", "HUSB", "WIFE"]
+l1_fam_tags = ["MARR", "HUSB", "WIFE", "CHIL"]
 date_tags = ["BIRT", "DIV", "MARR"]
 curr_top_level = "NONE"
 curr_2nd_level = "NONE"
@@ -15,7 +15,6 @@ ppl_idx = {
         "DEAT": 3,
         "FAMC": 4,
         "FAMS": 5,
-        "CHIL": 6,
         }
 
 fml_idx = {
@@ -69,7 +68,7 @@ def parseLine(line):
         elif tokens[1] in l1_fam_tags and top_level_tags[0] == "FAM":
             valid = "Y"
             if tokens[1] == "CHIL":
-                families[ID][fml_idx[tokens[1]]].append(' '.join(tokens[2:]))
+                families[ID][fml_idx[tokens[1]]] = (' '.join(tokens[2:]))
             else:
                 families[ID][fml_idx[tokens[1]]] = ' '.join(tokens[2:])
         if tokens[1] in date_tags:
@@ -92,14 +91,37 @@ def parseLine(line):
         print("<-- 2|{tag}|{v}|{args}".format(tag = tokens[1], v = valid, args = ' '.join(tokens[2:])))
         curr_2nd_level = "NONE"
 
+def fill_spouse_name(family_key):
+    family = families[family_key]
+    husb = family[2]
+    wife = family[4]
+    child = family[6]
+
+    family[0] = "YES" if husb != "N/A" and wife != "N/A" else "NO"
+    family[1] = "NO" if family[0] == "YES" else "YES"
+    
+    husb_person = people[husb]
+    wife_person = people[wife]
+    if child != "N/A":
+        child_person = people[child]
+        people[child][4] = family_key
+    family[3] = husb_person[0]
+    family[5] = wife_person[0]
+    people[husb][5] = wife
+    people[wife][5] = husb
 
 def main():
     file = open('Jiayi.ged', 'r')
     Lines = file.readlines()
     for line in Lines:
         parseLine(line)
-    pp = pprint.PrettyPrinter(indent=4) 
+    for family in families.keys():
+        fill_spouse_name(family)
+    pp = pprint.PrettyPrinter(indent=2) 
+    
+    pp.pprint(["ID", "NAME", "SEX", "BIRT", "DEAT", "CHILD", "SPOUSE"])
     pp.pprint(people)
+    pp.pprint(["ID", "MARR", "DIVOR", "HUSB", "HUSBNAME", "WIFE", "WIFENAME", "CHILD"])
     pp.pprint(families)
 
 main()
