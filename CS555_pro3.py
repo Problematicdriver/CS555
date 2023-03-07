@@ -10,6 +10,7 @@ info_list = [
         "_MARNM": "Xiao",
         "SEX": "M",
         "BIRT": "1 JAN 1999",
+        "MARR": "2 JAN 1999",
         "FAMC": "@F1@"
     },
     {
@@ -20,6 +21,7 @@ info_list = [
         "_MARNM": "Xiao",
         "SEX": "M",
         "BIRT": "1 FEB 1965",
+        "MARR": "3 JAN 1969",
         "FAMC": "@F2@",
         "FAMS": "@F1@"
     },
@@ -31,6 +33,7 @@ info_list = [
         "_MARNM": "Xu",
         "SEX": "F",
         "BIRT": "1 JAN 1971",
+        "MARR": "12 FEB 1979",
         "FAMC": "@F3@",
         "FAMS": "@F1@"
     }
@@ -74,3 +77,24 @@ for fam in famc_list + fams_list:
     ])
 print("Families:")
 print(fam_table)
+
+# Check Birthday
+from datetime import datetime
+for key in ['BIRT', 'DEAT', 'DIV', 'MARR']:
+    for info in info_list:
+        date = info.get(key)
+        if not date:
+            continue
+        date_time = datetime.strptime(date, "%d %b %Y")
+        if datetime.now() < date_time:
+            print(f'error: {key} of {info["NAME"]} is in the future.')
+
+# Check Marriage Date
+for info in info_list:
+    birth_date = datetime.strptime(info.get('BIRT'), "%d %b %Y")
+    marr_date = datetime.strptime(info.get('MARR'), "%d %b %Y")
+    if birth_date > marr_date:
+        print(f'error: marriage of {info["NAME"]} is earlier than birthday.')
+
+
+
