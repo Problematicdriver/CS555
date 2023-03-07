@@ -1,0 +1,25 @@
++-----+-------------------+--------+-----------+----------+
+|  ID |        Name       | Gender | Spouse_ID | Children |
++-----+-------------------+--------+-----------+----------+
+|  I1 |    Jiayi /Guo/    |   M    |           |  ['F1']  |
+|  I2 |   Yongqing /Li/   |   F    |     F1    |  ['F2']  |
+|  I3 |     Hui /Guo/     |   F    |     F1    |  ['F3']  |
+|  I4 |    Lirong /Xie/   |   F    |     F2    |    []    |
+|  I5 |    Fuzhao /Li/    |   M    |     F2    |    []    |
+|  I6 |  Wanrong /Huang/  |   F    |     F3    |    []    |
+|  I7 |   Bingjun /Guo/   |   M    |     F3    |    []    |
+|  I8 |    Tonghua /Li/   |   F    |     F5    |  ['F2']  |
+|  I9 |    Gang /Wang/    |   M    |     F5    |    []    |
+| I10 | Chenghong /Cheng/ |   M    |           |  ['F5']  |
+| I11 |    Zijun /Yang/   |   M    |     F4    |    []    |
+| I12 |     Yi /Yang/     |   F    |           |  ['F4']  |
++-----+-------------------+--------+-----------+----------+
++----+------------+---------------+---------+-----------------+--------------+
+| ID | Husband_ID |  Husband_Name | Wife_ID |    Wife_Name    |   Children   |
++----+------------+---------------+---------+-----------------+--------------+
+| F1 |     I2     | Yongqing /Li/ |    I3   |    Hui /Guo/    |    ['I1']    |
+| F2 |     I5     |  Fuzhao /Li/  |    I4   |   Lirong /Xie/  | ['I2', 'I8'] |
+| F3 |     I7     | Bingjun /Guo/ |    I6   | Wanrong /Huang/ |    ['I3']    |
+| F4 |    I11     |  Zijun /Yang/ |    I8   |   Tonghua /Li/  |   ['I12']    |
+| F5 |     I9     |  Gang /Wang/  |    I8   |   Tonghua /Li/  |   ['I10']    |
++----+------------+---------------+---------+-----------------+--------------+
