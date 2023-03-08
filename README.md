@@ -3,5 +3,5 @@ Qingyao Fan
 Hao Xie
 Qingfang Xu
 
-Example invocation:
+Example invocation: \
 python3 proj3_update.py Qingyao_Fan_GEDCOM.ged
