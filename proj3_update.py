@@ -116,6 +116,11 @@ print(families_table)
 
 
 
+
+
+
+
+
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
