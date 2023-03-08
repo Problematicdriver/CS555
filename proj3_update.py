@@ -140,7 +140,7 @@ for ind_id, info in individuals.items():
     if not birth_date or not death_date:
         continue
     if birth_date > death_date:
-        print(f'error: death of {info["name"]} ({death_date}) is earlier than birthday ({birth_date}).')
+        print(f'error: death of {info["name"]} ({death_date}) is earlier than birthday ({birth_date}). #US03')
 
 # US04	Marriage before divorce
 for family_id, family in families.items():
@@ -149,7 +149,7 @@ for family_id, family in families.items():
     if not marr_date or not div_date:
         continue
     if marr_date > div_date:
-        print(f'error: divorce ({div_date}) of family {family_id} is earlier than marriage ({marr_date}).')
+        print(f'error: divorce ({div_date}) of family {family_id} is earlier than marriage ({marr_date}). #US04')
 
 # US05 Marriage should occur before death of either spouse
 for family_id, family in families.items():
