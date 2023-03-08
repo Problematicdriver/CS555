@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+from datetime import datetime
 
 # 存储所有的个人信息
 info_list = [
@@ -78,8 +79,7 @@ for fam in famc_list + fams_list:
 print("Families:")
 print(fam_table)
 
-# Check Birthday
-from datetime import datetime
+# Check Dates
 for key in ['BIRT', 'DEAT', 'DIV', 'MARR']:
     for info in info_list:
         date = info.get(key)

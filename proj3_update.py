@@ -1,7 +1,6 @@
 import sys
 
-from datetime import datetime, timedelta
-
+from datetime import datetime
 from prettytable import PrettyTable
 
 supported_tags = ["INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM", "MARR",
@@ -113,6 +112,26 @@ for families_id in sorted(families.keys(), key=lambda x: x[2:]):
     families_table.add_row([families_id, husband_id, husband_name, wife_id, wife_name, children, marriage_date, divorce_date])
 print(individual_table)
 print(families_table)
+
+# US01	Dates before current date
+# print(individuals.values())
+
+for key in ['birthdate', 'deathdate', 'divorcedate', 'marriagedate']:
+    for info in individuals.values():
+        date = info.get(key)
+        if not date:
+            continue
+        if datetime.now().date() < date:
+            print(f'error: {key} of {info["name"]} is in the future.')
+
+# US02	Birth before marriage
+for info in individuals.values():
+    birth_date = info.get('birthdate')
+    marr_date = info.get('marriagedate')
+    if not birth_date or not marr_date:
+        continue        
+    if birth_date > marr_date:
+        print(f'error: marriage of {info["name"]} is earlier than birthday.')
 
 
 # US05 Marriage should occur before death of either spouse
