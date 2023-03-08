@@ -12,8 +12,6 @@ families = {}
 
 filename = sys.argv[1]
 
-print(filename)
-
 with open(filename) as file:
     for line in file:
         line = line.strip()
@@ -46,7 +44,6 @@ with open(filename) as file:
             current_date_tag = "divorcedate" 
         elif tag == "DATE" and level == "2" and current_date_tag:
             date_value = datetime.strptime(arguments, "%d %b %Y").date()
-            print(date_value)
             individuals[current_individual_id][current_date_tag] = date_value
             if current_date_tag == "deathdate":
                 birthdate = individuals[current_individual_id]["birthdate"]
@@ -122,7 +119,7 @@ for key in ['birthdate', 'deathdate', 'divorcedate', 'marriagedate']:
         if not date:
             continue
         if datetime.now().date() < date:
-            print(f'error: {key} of {info["name"]} is in the future.')
+            print(f'error: {key} of {info["name"]} is in the future. #US01')
 
 # US02	Birth before marriage
 for info in individuals.values():
@@ -131,7 +128,7 @@ for info in individuals.values():
     if not birth_date or not marr_date:
         continue        
     if birth_date > marr_date:
-        print(f'error: marriage of {info["name"]} is earlier than birthday.')
+        print(f'error: marriage of {info["name"]} is earlier than birthday. #US02')
 
 # US03	Birth before death
 for ind_id, info in individuals.items():
@@ -158,9 +155,9 @@ for family_id, family in families.items():
     wife_death_date = individuals[family['wife_id']]['deathdate']
     if husband_death_date is not None and wife_death_date is not None \
             and marriage_date > husband_death_date and marriage_date > wife_death_date:
-                print(f"error: marriage date of family {family_id} occurred after the death dates of both husband and wife.")
+                print(f"error: marriage date of family {family_id} occurred after the death dates of both husband and wife. #US05")
     else:
-        print(f"error: marriage date of family {family_id} occurred before the death dates of either husband or wife.")
+        print(f"error: marriage date of family {family_id} occurred before the death dates of either husband or wife. #US05")
 
 
 # US06 Divorce can only occur before death of both spouses
@@ -170,16 +167,16 @@ for family_id, family in families.items():
     wife_death_date = individuals[family['wife_id']]['deathdate']
     if husband_death_date is not None and wife_death_date is not None \
             and divorce_date > husband_death_date and divorce_date > wife_death_date:
-                print(f"error: divorce date of family {family_id} occurred after the death dates of both husband and wife.")
+                print(f"error: divorce date of family {family_id} occurred after the death dates of both husband and wife. #US06")
     else:
-        print(f"error: divorce date of family {family_id} occurred before the death dates of either husband or wife.")
+        print(f"error: divorce date of family {family_id} occurred before the death dates of either husband or wife. #US06")
 
         
 
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
-        print(f"error: child {child_id} was born before parents' marriage date in family {family_id}")
+        print(f"error: child {child_id} was born before parents' marriage date in family {family_id}. #US07")
     else:
         continue
 
@@ -190,8 +187,8 @@ for family_id, family in families.items():
     for child_id in family['children']:
         child_birth_date = individuals[child_id]['birthdate']
         if child_birth_date < marriage_date:
-            print(f"error: child {individuals[child_id]['name']} was born before parents' marriage date in family {family_id}")
+            print(f"error: child {individuals[child_id]['name']} was born before parents' marriage date in family {family_id}. #US08")
         if divorce_date and (child_birth_date - divorce_date).days > 270:
-            print(f"error: child {individuals[child_id]['name']} was born more than 9 months after parents' divorce date in family {family_id}")
+            print(f"error: child {individuals[child_id]['name']} was born more than 9 months after parents' divorce date in family {family_id}. #US08")
 
 
