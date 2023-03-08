@@ -146,7 +146,7 @@ for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
         print(f"{individual_id} has an age greater than or equal to 150 years old.")
     else:
-        print(f"{individual_id} has an age less than 150 years old.")
+        continue
 
 #US08:Birth before marriage of parents.
 for family_id, family in families.items():
