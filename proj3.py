@@ -8,7 +8,7 @@ supported_tags = ["INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM", 
 individuals = {}
 families = {}
 
-with open('test.ged') as file:
+with open('marriage.ged') as file:
     for line in file:
         line = line.strip()
         parts = line.split(" ")

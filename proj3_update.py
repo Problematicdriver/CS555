@@ -1,3 +1,5 @@
+import sys
+
 from datetime import datetime, timedelta
 
 from prettytable import PrettyTable
@@ -9,7 +11,11 @@ supported_tags = ["INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM", 
 individuals = {}
 families = {}
 
-with open('test.ged') as file:
+filename = sys.argv[1]
+
+print(filename)
+
+with open(filename) as file:
     for line in file:
         line = line.strip()
         parts = line.split(" ")
@@ -35,13 +41,22 @@ with open('test.ged') as file:
         elif tag == "DEAT" and level == "1":
             current_date_tag = "deathdate"
             individuals[current_individual_id]["alive"] = False
+        elif tag == "MARR" and level == "1":
+            current_date_tag = "marriagedate"
+        elif tag == "DIV" and level == "1":
+            current_date_tag = "divorcedate" 
         elif tag == "DATE" and level == "2" and current_date_tag:
             date_value = datetime.strptime(arguments, "%d %b %Y").date()
+            print(date_value)
             individuals[current_individual_id][current_date_tag] = date_value
             if current_date_tag == "deathdate":
                 birthdate = individuals[current_individual_id]["birthdate"]
                 if birthdate:
                     individuals[current_individual_id]["age"] = (date_value - birthdate).days // 365
+            elif current_date_tag == "marriagedate":
+                families[current_family_id]["marriagedate"] = date_value
+            elif current_date_tag == "divorcedate":
+                families[current_family_id]["divorcedate"] = date_value
             else:
                 now = datetime.now().date()
                 birthdate = individuals[current_individual_id]["birthdate"]
@@ -54,7 +69,6 @@ with open('test.ged') as file:
             individuals[current_individual_id]["child"].append(arguments.strip("@"))
         elif tag == "FAMS" and level == "1":
             individuals[current_individual_id]["spouse"] = arguments.strip("@")
-
 
         elif tag == "FAM" and level == "0":
             current_family_id = arguments.strip("@")
@@ -70,15 +84,7 @@ with open('test.ged') as file:
             families[current_family_id]["wife_name"] = current_family_wife_name
         elif tag == "CHIL" and level == "1":
             families[current_family_id]["children"].append(arguments.strip("@"))
-        elif tag == "MARR" and level == "1":
-            current_date_tag = "marriagedate"
-            date_value = datetime.strptime(arguments, "%d %b %Y").date()
-            families[current_family_id][current_date_tag] = date_value
-        elif tag == "DIV" and level == "1":
-            current_date_tag = "divorcedate"
-            date_value = datetime.strptime(arguments, "%d %b %Y").date()
-            families[current_family_id][current_date_tag] = date_value
-
+        
 # create a PrettyTable for individuals and print it
 individual_table = PrettyTable()
 individual_table.field_names = ["ID", "Name", "Gender", "Birthdate", "Deathdate", "Alive", "Age", "Spouse_ID", "Children"]
