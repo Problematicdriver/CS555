@@ -114,8 +114,24 @@ for families_id in sorted(families.keys(), key=lambda x: x[2:]):
 print(individual_table)
 print(families_table)
 
-# Testing condition 1: Death should be less than 150 years after birth for dead people, and current date should be less than 150 years after birth for all living people
 
 
-# Read GEDCOM file and populate individuals and families dictionaries
+#US07:Less then 150 years old.
+for individual_id, individual in individuals.items():
+    if individual['age'] >= 150:
+        print(f"{individual_id} has an age greater than or equal to 150 years old.")
+    else:
+        print(f"{individual_id} has an age less than 150 years old.")
+
+#US08:Birth before marriage of parents.
+for family_id, family in families.items():
+    marriage_date = family['marriagedate']
+    divorce_date = family['divorcedate']
+    for child_id in family['children']:
+        child_birth_date = individuals[child_id]['birthdate']
+        if child_birth_date < marriage_date:
+            print(f"Error: Child {child_id} was born before parents' marriage date in family {family_id}")
+        if divorce_date and (child_birth_date - divorce_date).days > 270:
+            print(f"Error: Child {child_id} was born more than 9 months after parents' divorce date in family {family_id}")
+
 
