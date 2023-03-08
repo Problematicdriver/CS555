@@ -172,11 +172,10 @@ for family_id, family in families.items():
         print(f"error: divorce date of family {family_id} occurred before the death dates of either husband or wife. #US06")
 
         
-
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
-        print(f"error: child {child_id} was born before parents' marriage date in family {family_id}. #US07")
+        print(f"Error: {individual_id} has an age greater than or equal to 150 years old.")
     else:
         continue
 
