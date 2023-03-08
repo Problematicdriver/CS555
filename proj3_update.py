@@ -115,11 +115,31 @@ print(individual_table)
 print(families_table)
 
 
+# US05 Marriage should occur before death of either spouse
+for family_id, family in families.items():
+    marriage_date = family['marriagedate']
+    husband_death_date = individuals[family['husband_id']]['deathdate']
+    wife_death_date = individuals[family['wife_id']]['deathdate']
+    if husband_death_date is not None and wife_death_date is not None \
+            and marriage_date > husband_death_date and marriage_date > wife_death_date:
+        print(f"The marriage date of family {family_id} occurred after the death dates of both husband and wife.")
+    else:
+        print(f"The marriage date of family {family_id} occurred before  the death dates of either husband or wife.")
 
 
+# US06 Divorce can only occur before death of both spouses
+for family_id, family in families.items():
+    divorce_date = family['divorcedate']
+    husband_death_date = individuals[family['husband_id']]['deathdate']
+    wife_death_date = individuals[family['wife_id']]['deathdate']
+    if husband_death_date is not None and wife_death_date is not None \
+            and divorce_date > husband_death_date and divorce_date > wife_death_date:
+        print(f"The divorce date of family {family_id} occurred after the death dates of both husband and wife.")
+    else:
+        print(
+            f"The divorce date of family {family_id} occurred before the death dates of either husband or wife.")
 
-
-
+        
 
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
