@@ -157,8 +157,7 @@ for family_id, family in families.items():
             and marriage_date > husband_death_date and marriage_date > wife_death_date:
                 print(f"error: marriage date of family {family_id} occurred after the death dates of both husband and wife. #US05")
     else:
-        print(f"error: marriage date of family {family_id} occurred before the death dates of either husband or wife. #US05")
-
+        continue
 
 # US06 Divorce can only occur before death of both spouses
 for family_id, family in families.items():
@@ -169,13 +168,14 @@ for family_id, family in families.items():
             and divorce_date > husband_death_date and divorce_date > wife_death_date:
                 print(f"error: divorce date of family {family_id} occurred after the death dates of both husband and wife. #US06")
     else:
-        print(f"error: divorce date of family {family_id} occurred before the death dates of either husband or wife. #US06")
+        continue
+        
 
         
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
-        print(f"Error: {individual_id} has an age greater than or equal to 150 years old.")
+        print(f"Error: {individual_id} has an age greater than or equal to 150 years old."#US07)
     else:
         continue
 
