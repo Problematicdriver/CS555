@@ -78,6 +78,12 @@ with open('Project4.ged') as file:
         elif tag == "CHIL" and level == "1":
             families[current_family_id]["children"].append(arguments.strip("@"))
 
+for fam_id, family in families.items():
+    wife = family["wife_id"]
+    husband = family["husband_id"]
+    individuals[wife]["marriagedate"] = family["marriagedate"]
+    individuals[husband]["marriagedate"] = family["marriagedate"]
+
 # create a PrettyTable for individuals and print it
 individual_table = PrettyTable()
 individual_table.field_names = ["ID", "Name", "Gender", "Birthdate", "Deathdate", "Alive", "Age", "Spouse_ID",
@@ -122,7 +128,7 @@ for key in ['birthdate', 'deathdate', 'divorcedate', 'marriagedate']:
             print(f'error: {key} of {info["name"]} is in the future. #US01')
 
 # US02	Birth before marriage
-for info in individuals.values():
+for ind_id, info in individuals.items():
     birth_date = info.get('birthdate')
     marr_date = info.get('marriagedate')
     if not birth_date or not marr_date:

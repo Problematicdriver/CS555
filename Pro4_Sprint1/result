@@ -1,0 +1,44 @@
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
+|  ID |       Name       | Gender | Birthdate  | Deathdate  | Alive | Age | Spouse_ID | Children |
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
+|  I1 |  Qingfang /Xu/   |   F    | 1996-11-18 |    None    |  True |  26 |           |  ['F1']  |
+|  I2 |    Yong /Xu/     |   M    | 1971-01-10 |    None    |  True |  52 |     F1    |  ['F2']  |
+|  I3 |  Lanying /Ming/  |   F    | 1972-10-18 |    None    |  True |  50 |     F1    |  ['F3']  |
+|  I4 |   Qinggui /Xu/   |   M    | 2002-01-07 |    None    |  True |  21 |           |  ['F1']  |
+|  I5 |    Jun /Ming/    |   M    | 1809-03-13 | 2019-01-29 | False | 210 |     F3    |    []    |
+|  I6 |    Xiu /Yuan/    |   F    | 2030-05-08 | 2020-06-21 | False | -10 |     F3    |    []    |
+|  I7 |   Xianglu /Xu/   |   M    | 1942-09-25 |    None    |  True |  80 |     F2    |    []    |
+|  I8 | Lanxiang /Zhang/ |   F    | 1946-04-13 |    None    |  True |  76 |     F2    |    []    |
+|  I9 |    Hang /Xu/     |   M    | 1973-07-12 |    None    |  True |  49 |     F6    |  ['F2']  |
+| I10 |    Ying /Xu/     |   F    | 1992-06-16 |    None    |  True |  30 |     F5    |  ['F6']  |
+| I11 |  Fengyi /Chen/   |   F    | 2010-04-28 | 2003-05-07 | False |  -7 |     F6    |    []    |
+| I12 |   Yiyi /Yuan/    |   F    | 1980-06-11 |    None    |  True |  42 |     F4    |    []    |
+| I13 |    Long /Xu/     |   M    | 1879-07-06 |    None    |  True | 143 |           |  ['F4']  |
+| I14 |  Xiang /Zhong/   |   M    | 1990-08-26 |    None    |  True |  32 |     F5    |    []    |
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
++----+------------+---------------+---------+------------------+--------------+------------+------------+
+| ID | Husband_ID |  Husband_Name | Wife_ID |    Wife_Name     |   Children   |  Marriage  |  Divorce   |
++----+------------+---------------+---------+------------------+--------------+------------+------------+
+| F1 |     I2     |   Yong /Xu/   |    I3   |  Lanying /Ming/  | ['I1', 'I4'] | 1970-09-19 |    None    |
+| F2 |     I7     |  Xianglu /Xu/ |    I8   | Lanxiang /Zhang/ | ['I2', 'I9'] | 1968-09-09 |    None    |
+| F3 |     I5     |   Jun /Ming/  |    I6   |    Xiu /Yuan/    |    ['I3']    | 2021-07-19 |    None    |
+| F4 |     I9     |   Hang /Xu/   |   I12   |   Yiyi /Yuan/    |   ['I13']    | 1889-05-08 |    None    |
+| F5 |    I14     | Xiang /Zhong/ |   I10   |    Ying /Xu/     |      []      | 2023-11-07 |    None    |
+| F6 |     I9     |   Hang /Xu/   |   I11   |  Fengyi /Chen/   |   ['I10']    | 2020-06-13 | 2010-02-14 |
++----+------------+---------------+---------+------------------+--------------+------------+------------+
+error: birthdate of Xiu /Yuan/ is in the future. #US01
+error: marriagedate of Ying /Xu/ is in the future. #US01
+error: marriagedate of Xiang /Zhong/ is in the future. #US01
+error: marriage of Yong /Xu/ is earlier than birthday. #US02
+error: marriage of Lanying /Ming/ is earlier than birthday. #US02
+error: marriage of Xiu /Yuan/ is earlier than birthday. #US02
+error: marriage of Yiyi /Yuan/ is earlier than birthday. #US02
+error: death of Xiu /Yuan/ (2020-06-21) is earlier than birthday (2030-05-08). #US03
+error: death of Fengyi /Chen/ (2003-05-07) is earlier than birthday (2010-04-28). #US03
+error: divorce (2010-02-14) of family F6 is earlier than marriage (2020-06-13). #US04
+error: marriage date of family F3 occurred after the death dates of both husband and wife. #US05
+error: divorcedate date of family F6 occurred after the death dates of  wife. #US06
+Error: I5 has an age greater than or equal to 150 years old. #US07
+error: child Lanying /Ming/ was born before parents' marriage date in family F3. #US08
+error: child Long /Xu/ was born before parents' marriage date in family F4. #US08
+error: child Ying /Xu/ was born before parents' marriage date in family F6. #US08
