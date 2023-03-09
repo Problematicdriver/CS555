@@ -175,7 +175,7 @@ for family_id, family in families.items():
 #US07:Less then 150 years old.
 for individual_id, individual in individuals.items():
     if individual['age'] >= 150:
-        print(f"Error: {individual_id} has an age greater than or equal to 150 years old."#US07)
+        print(f"Error: {individual_id} has an age greater than or equal to 150 years old. #US07")
     else:
         continue
 
