@@ -1,0 +1,82 @@
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
+|  ID |       Name       | Gender | Birthdate  | Deathdate  | Alive | Age | Spouse_ID | Children |
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
+|  I1 |  Qingfang /Xu/   |   F    | 1996-11-18 |    None    |  True |  26 |     F1    |  ['F2']  |
+|  I2 |    Yong /Xu/     |   M    | 1971-01-10 |    None    |  True |  52 |     F2    |  ['F3']  |
+|  I3 |  Lanying /Ming/  |   F    | 2022-10-18 |    None    |  True |  0  |     F2    |  ['F4']  |
+|  I4 |   Qinggui /Xu/   |   M    | 2002-01-07 |    None    |  True |  21 |           |  ['F2']  |
+|  I5 |    Jun /Ming/    |   M    | 1809-03-13 | 2019-01-29 | False | 210 |     F4    |    []    |
+|  I6 |    Xiu /Yuan/    |   F    | 2030-05-08 | 2020-06-21 | False | -10 |     F4    |    []    |
+|  I7 |   Xianglu /Xu/   |   M    | 1942-09-25 |    None    |  True |  80 |     F3    |    []    |
+|  I8 | Lanxiang /Zhang/ |   F    | 1946-04-13 |    None    |  True |  77 |     F3    |    []    |
+|  I9 |    Hang /Xu/     |   M    | 1973-07-12 |    None    |  True |  49 |     F6    |  ['F3']  |
+| I10 |   Yiyi /Yuan/    |   F    | 1980-06-11 |    None    |  True |  42 |     F7    |    []    |
+| I20 |    Four /Xu/     |   M    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I11 |    Ying /Xu/     |   F    | 1992-06-16 |    None    |  True |  30 |     F8    |  ['F6']  |
+| I21 |    Five /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I12 |  Xiang /Zhong/   |   M    | 1990-08-26 |    None    |  True |  32 |     F8    |    []    |
+| I22 |     Six /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I13 |  Fengyi /Chen/   |   F    | 2010-04-28 | 2003-05-07 | False |  -7 |     F6    |    []    |
+| I23 |    Seven /Xu/    |   M    | 1973-02-02 |    None    |  True |  50 |     F1    |  ['F3']  |
+| I14 |    Long /Xu/     |   M    | 1879-07-06 |    None    |  True | 143 |     F7    |  ['F5']  |
+| I24 |    Eight /Xu/    |        | 1976-05-03 |    None    |  True |  46 |           |  ['F3']  |
+| I15 |     May /Xu/     |   F    | 1970-02-06 |    None    |  True |  53 |     F9    |  ['F3']  |
+| I25 |    Night /Xu/    |        | 1977-01-07 |    None    |  True |  46 |           |  ['F3']  |
+| I16 |     Jun /Xu/     |   M    | 1975-06-06 |    None    |  True |  47 |     F9    |  ['F3']  |
+| I26 |     Ten /Xu/     |   M    | 1979-01-05 |    None    |  True |  44 |           |  ['F3']  |
+| I17 |     One /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I27 |     11 /Xu/      |   F    | 1980-02-02 |    None    |  True |  43 |           |  ['F3']  |
+| I18 |     Two /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I28 |     12 /Xu/      |   F    | 1981-02-03 |    None    |  True |  42 |           |  ['F3']  |
+| I19 |    Three /Xu/    |   M    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I29 |     13 /Xu/      |   F    | 1982-02-01 |    None    |  True |  41 |           |  ['F3']  |
++-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
++----+------------+---------------+---------+------------------+-----------------------------------------------------------------------------------------------------------------------+------------+------------+
+| ID | Husband_ID |  Husband_Name | Wife_ID |    Wife_Name     |                                                        Children                                                       |  Marriage  |  Divorce   |
++----+------------+---------------+---------+------------------+-----------------------------------------------------------------------------------------------------------------------+------------+------------+
+| F1 |    I23     |   Seven /Xu/  |    I1   |  Qingfang /Xu/   |                                                           []                                                          | 2023-01-04 |    None    |
+| F2 |     I2     |   Yong /Xu/   |    I3   |  Lanying /Ming/  |                                                      ['I1', 'I4']                                                     | 1970-09-19 |    None    |
+| F3 |     I7     |  Xianglu /Xu/ |    I8   | Lanxiang /Zhang/ | ['I2', 'I9', 'I15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29'] | 1968-09-09 |    None    |
+| F4 |     I5     |   Jun /Ming/  |    I6   |    Xiu /Yuan/    |                                                         ['I3']                                                        | 2021-07-19 |    None    |
+| F5 |     I9     |   Hang /Xu/   |   I10   |   Yiyi /Yuan/    |                                                        ['I14']                                                        | 1889-05-08 |    None    |
+| F6 |     I9     |   Hang /Xu/   |   I13   |  Fengyi /Chen/   |                                                        ['I11']                                                        | 2020-06-13 | 2010-02-14 |
+| F7 |    I14     |   Long /Xu/   |   I10   |   Yiyi /Yuan/    |                                                           []                                                          | 2023-01-03 |    None    |
+| F8 |    I12     | Xiang /Zhong/ |   I11   |    Ying /Xu/     |                                                           []                                                          | 2023-11-07 |    None    |
+| F9 |    I16     |    Jun /Xu/   |   I15   |     May /Xu/     |                                                           []                                                          | 2020-04-06 |    None    |
++----+------------+---------------+---------+------------------+-----------------------------------------------------------------------------------------------------------------------+------------+------------+
+error: birthdate of Xiu /Yuan/ is in the future. #US01
+error: marriagedate of Ying /Xu/ is in the future. #US01
+error: marriagedate of Xiang /Zhong/ is in the future. #US01
+error: marriage of Yong /Xu/ is earlier than birthday. #US02
+error: marriage of Lanying /Ming/ is earlier than birthday. #US02
+error: marriage of Xiu /Yuan/ is earlier than birthday. #US02
+error: death of Xiu /Yuan/ (2020-06-21) is earlier than birthday (2030-05-08). #US03
+error: death of Fengyi /Chen/ (2003-05-07) is earlier than birthday (2010-04-28). #US03
+error: divorce (2010-02-14) of family F6 is earlier than marriage (2020-06-13). #US04
+error: marriage date of family F4 occurred after the death dates of both husband and wife. #US05
+error: divorcedate date of family F6 occurred after the death dates of  wife. #US06
+Error: I5 has an age greater than or equal to 150 years old. #US07
+error: child Long /Xu/ was born before parents' marriage date in family F5. #US08
+error: child Ying /Xu/ was born before parents' marriage date in family F6. #US08
+error: child Ying /Xu/ was born after mom's death date in family F4. #US09
+error: child Ying /Xu/ was born more than 9 months after dad's death date in family F4. #US09
+error: Lanying /Ming/ was married before 14 yo in family F2. #US10
+error: Yong /Xu/ was married before 14 yo in family F2. #US10
+error: Xiu /Yuan/ was married before 14 yo in family F4. #US10
+error: Yiyi /Yuan/ was married before 14 yo in family F5. #US10
+error: Hang /Xu/ was married before 14 yo in family F5. #US10
+error: Fengyi /Chen/ was married before 14 yo in family F6. #US10
+error: Hang /Xu/ and Hang /Xu/ are married to the same person. #US11
+error: Hang /Xu/ and Long /Xu/ are married to the same person. #US11
+error: Hang /Xu/ and Hang /Xu/ are married to the same person. #US11
+error: Long /Xu/ and Hang /Xu/ are married to the same person. #US11
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 siblings are born less than 8 months apart. #US13
+Error: F3 more than five siblings born at the same time. #US14
+Error: F3 have 17 childrens, more than 15 siblings. #US15
+Error: I14 or I10 are descendants, but have married each other. #US17
+Error: Siblings May /Xu/ and Jun /Xu/ are siblings, but have married each other. #US18
