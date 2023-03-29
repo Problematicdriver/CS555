@@ -224,17 +224,16 @@ for family_id, family in families.items():
 for family_id, family in families.items():
     husband1_id = family["husband_id"]
     wife1_id = family["wife_id"]
-    for family_id, family in families.items():
-        children = family.get("children", [])
-        for i in range(len(children)):
-            child_id = children[i]
-            for family_id, family in families.items():
-                husband2_id = family["husband_id"]
-                wife2_id = family["wife_id"]
-                if husband1_id == husband2_id and child_id == wife2_id:
-                    print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US19")
-                if wife1_id == wife2_id and child_id == husband2_id:
-                    print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US19")
+    children = family.get("children", [])
+    for i in range(len(children)):
+        child_id = children[i]
+        for family_id, family in families.items():
+            husband2_id = family["husband_id"]
+            wife2_id = family["wife_id"]
+            if husband1_id == husband2_id and child_id == wife2_id:
+                print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US17")
+            if wife1_id == wife2_id and child_id == husband2_id:
+                print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US17")
 
 
 # US18 Siblings should not marry one another.
