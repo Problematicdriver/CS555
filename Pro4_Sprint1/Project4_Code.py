@@ -199,3 +199,59 @@ for family_id, family in families.items():
         if divorce_date and (child_birth_date - divorce_date).days > 270:
             print(
                 f"error: child {individuals[child_id]['name']} was born more than 9 months after parents' divorce date in family {family_id}. #US08")
+         
+        
+        
+ 
+#US14 Multiple births <= 5, No more than five siblings should be born at the same time.
+for family_id, family in families.items():
+    children = family.get("children", [])
+    birthdates = [individuals[child]["birthdate"] for child in children if individuals[child]["birthdate"]]
+    if len(birthdates) != len(set(birthdates)):
+        # there are multiple births
+        num_multiple_births = len(birthdates) - len(set(birthdates)) + 1
+        if num_multiple_births > 5:
+            # check if multiple births exceeds 5
+            print(f"Error: {family_id} more than five siblings born at the same time. #US14")
+
+#US15	Fewer than 15 siblings	There should be fewer than 15 siblings in a family
+for family_id, family in families.items():
+    children = family.get("children", [])
+    if len(children) >= 15:
+        print(f"Error: {family_id} have {len(children)} childrens, more than 15 siblings. #US15")
+
+# US17 No marriages to descendants.
+for family_id, family in families.items():
+    husband1_id = family["husband_id"]
+    wife1_id = family["wife_id"]
+    for family_id, family in families.items():
+        children = family.get("children", [])
+        for i in range(len(children)):
+            child_id = children[i]
+            for family_id, family in families.items():
+                husband2_id = family["husband_id"]
+                wife2_id = family["wife_id"]
+                if husband1_id == husband2_id and child_id == wife2_id:
+                    print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US19")
+                if wife1_id == wife2_id and child_id == husband2_id:
+                    print(f"Error: {husband2_id} or {wife2_id} are descendants, but have married each other. #US19")
+
+
+# US18 Siblings should not marry one another.
+# iterate through each family
+for family_id, family in families.items():
+    children = family.get("children", [])
+
+    # iterate through each pair of children
+    for i in range(len(children)):
+        for j in range(i + 1, len(children)):
+            child1_id = children[i]
+            child2_id = children[j]
+
+            # check if both children have a common parent
+            a = individuals.get(child1_id, {}).get("spouse")
+            b = individuals.get(child2_id, {}).get("spouse")
+            if a is not None and b is not None and a == b:
+                print(f"Error: Siblings {individuals[child1_id]['name']} and {individuals[child2_id]['name']} are siblings, but have married each other. #US18")
+
+
