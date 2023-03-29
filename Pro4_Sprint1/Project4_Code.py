@@ -1,4 +1,5 @@
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from prettytable import PrettyTable
 
 supported_tags = ["INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM", "MARR",
@@ -200,8 +201,36 @@ for family_id, family in families.items():
             print(
                 f"error: child {individuals[child_id]['name']} was born more than 9 months after parents' divorce date in family {family_id}. #US08")
          
+
+#US09:Birth before death of parents
+for family_id, family in families.items():
+    mom_death_date = individuals[family['wife_id']]['deathdate']
+    dad_death_date = individuals[family['husband_id']]['deathdate']
+    child_birth_dates = [individuals[id]['birthdate'] for id in family['children']]
+
+    for date in child_birth_dates:
+        if mom_death_date:
+            if date > mom_death_date:
+                print(f"error: child {individuals[child_id]['name']} was born after mom's death date in family {family_id}. #US09")
         
-        
+        if dad_death_date:
+            if date > dad_death_date + relativedelta(months=9):
+                print(f"error: child {individuals[child_id]['name']} was born more than 9 months after dad's death date in family {family_id}. #US09")
+
+#US10:Marriage after 14
+for family_id, family in families.items():
+    wife_id = family['wife_id']
+    husband_id = family['husband_id']
+    wife_birth_date = individuals[wife_id]['birthdate']
+    husband_birth_date = individuals[husband_id]['birthdate']
+    marriage_date = family['marriagedate']
+    
+    x = marriage_date - relativedelta(years=14)
+    if x < wife_birth_date:
+        print(f"error: {individuals[wife_id]['name']} was married before 14 yo in family {family_id}. #US10")
+    if x < husband_birth_date:
+        print(f"error: {individuals[husband_id]['name']} was married before 14 yo in family {family_id}. #US10")
+    
  
 #US14 Multiple births <= 5, No more than five siblings should be born at the same time.
 for family_id, family in families.items():
