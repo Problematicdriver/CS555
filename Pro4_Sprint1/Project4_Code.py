@@ -230,8 +230,35 @@ for family_id, family in families.items():
         print(f"error: {individuals[wife_id]['name']} was married before 14 yo in family {family_id}. #US10")
     if x < husband_birth_date:
         print(f"error: {individuals[husband_id]['name']} was married before 14 yo in family {family_id}. #US10")
-    
- 
+
+#US11 No bigamy
+for family_id, family in families.items():
+    husband_id = family['husband_id']
+    wife_id = family['wife_id']
+    marriage_date = family['marriagedate']
+    divorce_date = family['divorcedate']
+    for family_id2, family2 in families.items():
+        if family_id == family_id2:
+            continue
+        husband_id2 = family2['husband_id']
+        wife_id2 = family2['wife_id']
+        marriage_date2 = family2['marriagedate']
+        divorce_date2 = family2['divorcedate']
+        if husband_id == husband_id2 or wife_id == wife_id2:
+            if divorce_date is None or divorce_date2 is None:
+                print(f"error: {individuals[husband_id]['name']} and {individuals[husband_id2]['name']} are married to the same person. #US11")
+            elif divorce_date > marriage_date2 or divorce_date2 > marriage_date:
+                print(f"error: {individuals[husband_id]['name']} and {individuals[husband_id2]['name']} are married to the same person. #US11")
+
+#US13    Siblings spacing	Children should be born at least 8 months apart or more
+for family_id, family in families.items():
+    children = family.get("children", [])
+    birthdates = [individuals[child]["birthdate"] for child in children if individuals[child]["birthdate"]]
+    birthdates.sort()
+    for i in range(len(birthdates) - 1):
+        if (birthdates[i + 1] - birthdates[i]).days < 240:
+            print(f"Error: {family_id} siblings are born less than 8 months apart. #US13")
+
 #US14 Multiple births <= 5, No more than five siblings should be born at the same time.
 for family_id, family in families.items():
     children = family.get("children", [])
