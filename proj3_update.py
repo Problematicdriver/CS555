@@ -192,7 +192,7 @@ for family_id, family in families.items():
         if divorce_date and (child_birth_date - divorce_date).days > 270:
             print(f"error: child {individuals[child_id]['name']} was born more than 9 months after parents' divorce date in family {family_id}. #US08")
 
-# Birth before death of parents
+#US09:Birth before death of parents
 for family_id, family in families.items():
     mom_death_date = individuals[family['wife_id']]['deathdate']
     dad_death_date = individuals[family['husband_id']]['deathdate']
@@ -208,7 +208,7 @@ for family_id, family in families.items():
                 print(f"error: child {individuals[child_id]['name']} was born more than 9 months after dad's death date in family {family_id}. #US09")
 
 
-# Marriage after 14
+#US10:Marriage after 14
 for family_id, family in families.items():
     wife_id = family['wife_id']
     husband_id = family['husband_id']
