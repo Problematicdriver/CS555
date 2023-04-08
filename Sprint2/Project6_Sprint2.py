@@ -309,4 +309,51 @@ for family_id, family in families.items():
             if a is not None and b is not None and a == b:
                 print(f"Error: Siblings {individuals[child1_id]['name']} and {individuals[child2_id]['name']} are siblings, but have married each other. #US18")
 
+# US21	Correct gender for role: Husband in family should be male and wife in family should be female.
+for family_id, family in families.items():
+    husband_id = family["husband_id"]
+    wife_id = family["wife_id"]
+    a = individuals[husband_id]["gender"]
+    b = individuals[wife_id]["gender"]
+    if a != "M":
+        print(f"error:Husband {husband_id} in {family_id} should be male, not be female . #US21")
+    if b != "F":
+        print(f"error:Wife {wife_id} in {family_id} should be female , not be male . #US21")
 
+# US22	Unique IDs:	All individual IDs should be unique and all family IDs should be unique.
+family_id = []
+for family_id1, f in families.items():
+    family_id.append(family_id1)
+for i1 in range(len(family_id)):
+    for j1 in range(i1+1, len(family_id)):
+        if i1 == j1:
+            print(f"error: All family IDs should be unique. But{i1} and {j1} are same. #US22")
+individuals_id = []
+for individuals_id1, i in individuals.items():
+    individuals_id.append(individuals_id1)
+for i2 in range(len(individuals_id)):
+    for j2 in range(i2 + 1, len(individuals_id)):
+        if i2 == j2:
+            print(f"error: All individual IDs should be unique. But{i2} and {j2} are same. #US22")
+print("No error: All individual IDs and all family IDs are unique in this GEDCOM file. #US22")
+
+# US29	List deceased:	List all deceased individuals in a GEDCOM file.
+# US30	List living married: List all living married people in a GEDCOM file.
+deceased = []
+living = []
+married = []
+living_married = []
+for individuals_id, individual in individuals.items():
+    a = individual["alive"]
+    if a is False:
+        deceased.append(individuals_id)
+    else:
+        living.append(individuals_id)
+print("#29: All deceased individuals in a GEDCOM file: " + str(deceased) +" . #29")
+for family_id, family in families.items():
+    married.append(family["husband_id"])
+    married.append(family["wife_id"])
+for i in living:
+    if i in married:
+        living_married.append(i)
+print("#30: List all living married people in a GEDCOM file: " + str(living_married) +" . #30")        
