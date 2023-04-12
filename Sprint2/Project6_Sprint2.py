@@ -406,4 +406,4 @@ for family_id, family in families.items():
 for i in living:
     if i in married:
         living_married.append(i)
-print("#30: List all living married people in a GEDCOM file: " + str(living_married) +" . #30")        
+print("#30: List all living married people in a GEDCOM file : " + str(living_married) +" . #30")        
