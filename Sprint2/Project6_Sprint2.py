@@ -250,6 +250,22 @@ for family_id, family in families.items():
             elif divorce_date > marriage_date2 or divorce_date2 > marriage_date:
                 print(f"error: {individuals[husband_id]['name']} and {individuals[husband_id2]['name']} are married to the same person. #US11")
 
+# US12 Parents not too old
+for family_id, family in families.items():
+    mom_birth_date = individuals[family['wife_id']]['birthdate']
+    dad_birth_date = individuals[family['husband_id']]['birthdate']
+    child_birth_dates = [individuals[id]['birthdate'] for id in family['children']]
+
+    mom_limit = mom_birth_date + relativedelta(years = 60)
+    dad_limit = dad_birth_date + relativedelta(years = 80)
+
+    for date in child_birth_dates:
+        if date > mom_limit:
+            print(f"error: child {individuals[child_id]['name']} was born after mom's 60 in family {family_id}. #US12")
+        
+        if date > dad_limit:
+            print(f"error: child {individuals[child_id]['name']} was born after dad's 80 in family {family_id}. #US12")
+
 #US13    Siblings spacing	Children should be born at least 8 months apart or more
 for family_id, family in families.items():
     children = family.get("children", [])
@@ -275,6 +291,16 @@ for family_id, family in families.items():
     children = family.get("children", [])
     if len(children) >= 15:
         print(f"Error: {family_id} have {len(children)} childrens, more than 15 siblings. #US15")
+
+# US16 Male last names
+for family_id, family in families.items():
+    dad_name = individuals[family['husband_id']]['name']
+    children = [individuals[id] for id in family['children']]
+    sons = list(filter(lambda x: (x['gender'] == 'M'), children))
+    son_names = list(map(lambda x: (x['name']), sons))
+    for name in son_names:
+        if (dad_name.split('/')[1] != name.split('/')[1]):
+            print(f"error: son {name} has different last name than his dad {dad_name}. #US16")
 
 # US17 No marriages to descendants.
 for family_id, family in families.items():
