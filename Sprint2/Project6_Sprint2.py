@@ -363,6 +363,30 @@ for i2 in range(len(individuals_id)):
             print(f"error: All individual IDs should be unique. But{i2} and {j2} are same. #US22")
 print("No error: All individual IDs and all family IDs are unique in this GEDCOM file. #US22")
 
+# US23	Unique name and birth date:	No more than one individual with the same name and birth date should appear in a GEDCOM file.
+for individuals_id, individual in individuals.items():
+    name = individual["name"]
+    birthdate = individual["birthdate"]
+    for individuals_id1, individual1 in individuals.items():
+        name1 = individual1["name"]
+        birthdate1 = individual1["birthdate"]
+        if name == name1 and birthdate == birthdate1:
+            print(f"error: No more than one individual with the same name and birth date should appear in a GEDCOM file. But {individuals_id} and {individuals_id1} are same. #US23")
+
+# US25    Unique first names in families:	No more than one child with the same name and birth date should appear in a family.
+for family_id, family in families.items():
+    children = family.get("children", [])
+    for i in range(len(children)):
+        for j in range(i + 1, len(children)):
+            child1_id = children[i]
+            child2_id = children[j]
+            name1 = individuals[child1_id]["name"]
+            name2 = individuals[child2_id]["name"]
+            birthdate1 = individuals[child1_id]["birthdate"]
+            birthdate2 = individuals[child2_id]["birthdate"]
+            if name1 == name2 and birthdate1 == birthdate2:
+                print(f"error: No more than one child with the same name and birth date should appear in a family. But {child1_id} and {child2_id} are same. #US25")
+
 # US29	List deceased:	List all deceased individuals in a GEDCOM file.
 # US30	List living married: List all living married people in a GEDCOM file.
 deceased = []
