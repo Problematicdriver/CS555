@@ -407,3 +407,52 @@ for i in living:
     if i in married:
         living_married.append(i)
 print("#30: List all living married people in a GEDCOM file : " + str(living_married) +" . #30")        
+
+
+# Spring 4:
+# US31	List living single：List all living people over 30 who have never been married in a GEDCOM file.
+married = []
+single = []
+for family_id, family in families.items():
+    married.append(family["husband_id"])
+    married.append(family["wife_id"])
+for individuals_id, individual in individuals.items():
+    age = individual["age"]
+    if age > 30 and individuals_id not in married:
+        single.append(individuals_id)
+print("#31: List living single(over 30) in a GEDCOM file: " + str(single) +" . #31")
+
+# US32	List multiple births：List all multiple births in a GEDCOM file.
+from collections import Counter
+for family_id, family in families.items():
+    children = family["children"]
+    birthdates = [individuals[child]["birthdate"] for child in children if individuals[child]["birthdate"]]
+    duplicates = [k for k, v in Counter(birthdates).items() if v > 1]
+    multiple = []
+    for i in children:
+        birthdate = individuals[i]["birthdate"]
+        if birthdate in duplicates:
+            multiple.append(i)
+    if multiple:
+        print("#32: List living single(over 30) in a GEDCOM file: " + str(multiple) +" . #32")
+
+# US35	List recent births：List all people in a GEDCOM file who were born in the last 30 days.
+born_30days = []
+for individuals_id, individual in individuals.items():
+    birthdate = individual["birthdate"]
+    now = datetime.now().date()
+    days = (now - birthdate).days
+    if days <= 30:
+        born_30days.append(individuals_id)
+print("#35:List all people in a GEDCOM file who were born in the last 30 days: " + str(born_30days) +" . #35")
+
+# US36	List recent deaths：List all people in a GEDCOM file who died in the last 30 days.
+died_30days = []
+for individuals_id, individual in individuals.items():
+    deathdate = individual["deathdate"]
+    if deathdate:
+        now = datetime.now().date()
+        days = (now - deathdate).days
+        if days <= 30:
+            died_30days.append(individuals_id)
+print("#36:List all people in a GEDCOM file who died in the last 30 days: " + str(died_30days) +" . #36")
