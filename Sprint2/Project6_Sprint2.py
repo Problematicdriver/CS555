@@ -90,6 +90,7 @@ individual_table = PrettyTable()
 individual_table.field_names = ["ID", "Name", "Gender", "Birthdate", "Deathdate", "Alive", "Age", "Spouse_ID",
                                 "Children"]
 for individual_id in sorted(individuals.keys(), key=lambda x: x[2:]):
+    print(f"###{individual_id}")
     name = individuals[individual_id]["name"]
     gender = individuals[individual_id]["gender"]
     birthdate = individuals[individual_id]["birthdate"]
@@ -216,6 +217,7 @@ for family_id, family in families.items():
         if dad_death_date:
             if date > dad_death_date + relativedelta(months=9):
                 print(f"error: child {individuals[child_id]['name']} was born more than 9 months after dad's death date in family {family_id}. #US09")
+
 
 #US10:Marriage after 14
 for family_id, family in families.items():
@@ -456,3 +458,29 @@ for individuals_id, individual in individuals.items():
         if days <= 30:
             died_30days.append(individuals_id)
 print("#36:List all people in a GEDCOM file who died in the last 30 days: " + str(died_30days) +" . #36")
+
+# US38 List all living people in a GEDCOM file whose birthdays occur in the next 30 days
+birth_30days = []
+for individuals_id, individual in individuals.items():
+    if individual['deathdate']:
+        continue
+    birthdate = individual["birthdate"]
+    now = datetime.now().date()
+    days = (birthdate - now).days % 365.25
+    if days <= 30:
+        birth_30days.append(individuals_id)
+        # print(f"US38 < 30 now: {now}, birthdate: {birthdate}")
+print("#38:List all living people in a GEDCOM file whose birthdays occur in the next 30 days: " + str(birth_30days) +" . #38")
+
+# US39 List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days
+died_30days = []
+for family_id, family in families.items():
+    mom_death_date = individuals[family['wife_id']]['deathdate']
+    dad_death_date = individuals[family['husband_id']]['deathdate']
+    marriage_date = family['marriagedate']
+    now = datetime.now().date()
+    days = (marriage_date - now).days % 365.25
+    if days <= 30:
+        if mom_death_date or dad_death_date:
+            died_30days.append(individuals_id)
+print("#39:List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: " + str(died_30days) +" . #39")
