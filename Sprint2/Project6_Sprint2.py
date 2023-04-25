@@ -473,7 +473,7 @@ for individuals_id, individual in individuals.items():
 print("#38:List all living people in a GEDCOM file whose birthdays occur in the next 30 days: " + str(birth_30days) +" . #38")
 
 # US39 List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days
-died_30days = []
+anniversaries_30days = []
 for family_id, family in families.items():
     mom_death_date = individuals[family['wife_id']]['deathdate']
     dad_death_date = individuals[family['husband_id']]['deathdate']
@@ -481,6 +481,7 @@ for family_id, family in families.items():
     now = datetime.now().date()
     days = (marriage_date - now).days % 365.25
     if days <= 30:
-        if mom_death_date or dad_death_date:
-            died_30days.append(individuals_id)
-print("#39:List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: " + str(died_30days) +" . #39")
+        if not mom_death_date and not dad_death_date:
+            anniversaries_30days.append(family['wife_id'])
+            anniversaries_30days.append(family['husband_id'])
+print("#39:List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: " + str(anniversaries_30days) +" . #39")
