@@ -1,3 +1,4 @@
+Invalid date: 30 FEB 2015 #US42
 +-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
 |  ID |       Name       | Gender | Birthdate  | Deathdate  | Alive | Age | Spouse_ID | Children |
 +-----+------------------+--------+------------+------------+-------+-----+-----------+----------+
@@ -15,12 +16,13 @@
 | I30 |     13 /Xu/      |   F    | 1982-02-01 |    None    |  True |  41 |           |  ['F3']  |
 | I11 |    Ying /Xu/     |   F    | 1992-06-16 |    None    |  True |  30 |     F8    |  ['F6']  |
 | I21 |    Five /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
+| I31 |   Andrew /Xu/    |   M    | 1982-02-01 |    None    |  True |  41 |           |    []    |
 | I12 |  Xiang /Zhong/   |   M    | 1990-08-26 |    None    |  True |  32 |     F8    |    []    |
 | I22 |     Six /Xu/     |   F    | 1978-01-01 |    None    |  True |  45 |           |  ['F3']  |
 | I13 |  Fengyi /Chen/   |   F    | 2010-04-28 | 2003-05-07 | False |  -7 |     F6    |    []    |
 | I23 |    Seven /Xu/    |   M    | 1973-02-02 |    None    |  True |  50 |     F1    |  ['F3']  |
 | I14 |    Long /Xu/     |   M    | 1879-07-06 |    None    |  True | 143 |     F7    |  ['F5']  |
-| I24 |    Eight /Xu/    |        | 1976-05-03 |    None    |  True |  46 |           |  ['F3']  |
+| I24 |    Eight /Xu/    |        | 1976-05-03 |    None    |  True |  47 |           |  ['F3']  |
 | I15 |     May /Xu/     |   F    | 1970-02-06 |    None    |  True |  53 |     F9    |  ['F3']  |
 | I25 |    Night /Xu/    |        | 1977-01-07 |    None    |  True |  46 |           |  ['F3']  |
 | I16 |     Jun /Xu/     |   M    | 1975-06-06 |    None    |  True |  47 |     F9    |  ['F3']  |
@@ -116,6 +118,14 @@ error: No more than one individual with the same name and birth date should appe
 error: No more than one individual with the same name and birth date should appear in a GEDCOM file. But I29 and I30 are same. #US23
 error: No more than one individual with the same name and birth date should appear in a GEDCOM file. But I30 and I29 are same. #US23
 error: No more than one individual with the same name and birth date should appear in a GEDCOM file. But I30 and I30 are same. #US23
+error: No more than one individual with the same name and birth date should appear in a GEDCOM file. But I31 and I31 are same. #US23
 error: No more than one child with the same name and birth date should appear in a family. But I29 and I30 are same. #US25
 #29: All deceased individuals in a GEDCOM file: ['I5', 'I6', 'I13'] . #29
-#30: List all living married people in a GEDCOM file: ['I1', 'I2', 'I3', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I14', 'I15', 'I16', 'I23'] . #30
+#30: List all living married people in a GEDCOM file : ['I1', 'I2', 'I3', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I14', 'I15', 'I16', 'I23'] . #30
+#31: List living single(over 30) in a GEDCOM file: ['I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'I31'] . #31
+#32: List living single(over 30) in a GEDCOM file: ['I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I29', 'I30'] . #32
+#35:List all people in a GEDCOM file who were born in the last 30 days: ['I6'] . #35
+#36:List all people in a GEDCOM file who died in the last 30 days: ['I6'] . #36
+#38:List all living people in a GEDCOM file whose birthdays occur in the next 30 days: ['I24'] . #38
+#39:List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: ['I10', 'I9'] . #39
+#33:List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file: ['I3'] . #33
