@@ -41,7 +41,10 @@ with open('Project4.ged') as file:
         elif tag == "DIV" and level == "1":
             current_date_tag = "divorcedate"
         elif tag == "DATE" and level == "2" and current_date_tag:
-            date_value = datetime.strptime(arguments, "%d %b %Y").date()
+            try:
+                date_value = datetime.strptime(arguments, "%d %b %Y").date()
+            except ValueError:
+                print(f"Invalid date: {arguments} #US42")
             individuals[current_individual_id][current_date_tag] = date_value
             if current_date_tag == "deathdate":
                 birthdate = individuals[current_individual_id]["birthdate"]
@@ -90,7 +93,7 @@ individual_table = PrettyTable()
 individual_table.field_names = ["ID", "Name", "Gender", "Birthdate", "Deathdate", "Alive", "Age", "Spouse_ID",
                                 "Children"]
 for individual_id in sorted(individuals.keys(), key=lambda x: x[2:]):
-    print(f"###{individual_id}")
+    # print(f"###{individual_id}")
     name = individuals[individual_id]["name"]
     gender = individuals[individual_id]["gender"]
     birthdate = individuals[individual_id]["birthdate"]
@@ -485,3 +488,16 @@ for family_id, family in families.items():
             anniversaries_30days.append(family['wife_id'])
             anniversaries_30days.append(family['husband_id'])
 print("#39:List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: " + str(anniversaries_30days) +" . #39")
+
+# US33 List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file
+orphans = []
+for family_id, family in families.items():
+    mom_death_date = individuals[family['wife_id']]['deathdate']
+    dad_death_date = individuals[family['husband_id']]['deathdate']
+    children = family['children']
+    for child in children:
+        if not mom_death_date and not dad_death_date:
+            continue
+        if individuals[child]['age'] < 18:
+            orphans.append(child)
+print("#33:List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file: " + str(orphans) +" . #33")
